@@ -4,6 +4,7 @@ import { UsersService } from '../users/users.service';
 import { BearerAuth } from './decorator/bearer-auth.decorator';
 import { User } from './decorator/user.decorator';
 import { AuthService } from './auth.service';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -13,7 +14,7 @@ export class AuthController {
   ) {}
 
   @Post('/login')
-  async login(@Body() body) {
+  async login(@Body() body: LoginDto) {
     return await this.service.login(body);
   }
 
