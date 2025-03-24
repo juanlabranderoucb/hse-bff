@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 
 import { UsersService } from '../users/users.service';
 import { BearerAuth } from '../auth/decorator/bearer-auth.decorator';
@@ -11,5 +11,10 @@ export class UsersController {
   @Get('/')
   async findAll() {
     return await this.usersService.findAll();
+  }
+
+  @Get('/:userName')
+  async findOne(@Param('userName') userName: string) {
+    return await this.usersService.findOne(userName);
   }
 }

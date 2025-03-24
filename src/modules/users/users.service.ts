@@ -12,7 +12,7 @@ import { DatabaseService } from '../database/database.service';
 export class UsersService {
   constructor(private readonly db: DatabaseService) {}
 
-  async findOne(userName: string) {
+  async findOne(userName: string): Promise<Partial<User>> {
     const user = await this.db.user.findUnique({
       where: { userName, status: 1 },
       select: {
