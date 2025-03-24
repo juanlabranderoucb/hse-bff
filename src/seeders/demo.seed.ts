@@ -9,7 +9,7 @@ async function main() {
       {
         userName: 'admin',
         email: 'admin@company.com',
-        password: await hash('company', 12),
+        password: await hash('admin.pas', 12),
       },
     ],
   });
