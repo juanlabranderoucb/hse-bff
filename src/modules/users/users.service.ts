@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { compare } from 'bcrypt';
+import { User } from '@prisma/client';
 
 import { DatabaseService } from '../database/database.service';
 
@@ -42,6 +43,18 @@ export class UsersService {
       throw new NotAcceptableException('Contraseña incorrecta');
 
     return user;
+  }
+
+  async findAll(): Promise<Array<Partial<User>>> {
+    return await this.db.user.findMany({
+      where: { status: 1 },
+      select: {
+        id: true,
+        userName: true,
+        displayName: true,
+        email: true,
+      },
+    });
   }
 
   validate(user) {
