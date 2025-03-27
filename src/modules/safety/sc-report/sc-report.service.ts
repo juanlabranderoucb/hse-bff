@@ -36,11 +36,26 @@ export class ScReportService {
       select: {
         id: true,
         description: true,
+        location: true,
         date: true,
         user: {
           select: {
             userName: true,
             displayName: true,
+          },
+        },
+        impacts: {
+          where: { status: 1 },
+          select: {
+            id: true,
+            description: true,
+          },
+        },
+        suggestedFixes: {
+          where: { status: 1 },
+          select: {
+            id: true,
+            description: true,
           },
         },
         _count: {
@@ -67,6 +82,7 @@ export class ScReportService {
       data: {
         userId: user.id,
         description: data.description,
+        location: data.location,
       },
       select: {
         id: true,
