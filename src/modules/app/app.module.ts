@@ -8,6 +8,7 @@ import { UsersModule } from '../users/users.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ScReportModule } from '../safety/sc-report/sc-report.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AppService } from './app.service';
     DatabaseModule,
     AuthModule,
     UsersModule,
+    ScReportModule,
   ],
   controllers: [AppController],
   providers: [AppService],
