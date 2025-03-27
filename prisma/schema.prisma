@@ -15,40 +15,75 @@ model User {
   password    String  @db.Text
   status      Int     @default(1)
 
-  substandardConditionReports       SubstandardConditionReport[]
-  substandardConditionReportLikes   SubstandardConditionReportLike[]
-  substandardConditionReportReplies SubstandardConditionReportReply[]
+  substandardConditionReports            SubstandardConditionReport[]
+  substandardConditionReportLikes        SubstandardConditionReportLike[]
+  substandardConditionReportReplies      SubstandardConditionReportReply[]
+  substandardConditionReportAppliedFixes SubstandardConditionReportAppliedFix[]
 }
 
 model SubstandardConditionReport {
   id          Int      @id @default(autoincrement())
   userId      Int
   description String
+  location    String
   date        DateTime @default(now()) @db.Timestamp
   status      Int      @default(1)
 
-  user    User                              @relation(fields: [userId], references: [id])
-  likes   SubstandardConditionReportLike[]
-  replies SubstandardConditionReportReply[]
+  user           User                                     @relation(fields: [userId], references: [id])
+  impacts        SubstandardConditionReportImpact[]
+  suggestedFixes SubstandardConditionReportSuggestedFix[]
+  appliedFixes   SubstandardConditionReportAppliedFix[]
+  likes          SubstandardConditionReportLike[]
+  replies        SubstandardConditionReportReply[]
+}
+
+model SubstandardConditionReportImpact {
+  id                           Int    @id @default(autoincrement())
+  substandardConditionReportId Int
+  description                  String
+  status                       Int    @default(1)
+
+  substandardConditionReport SubstandardConditionReport @relation(fields: [substandardConditionReportId], references: [id])
+}
+
+model SubstandardConditionReportSuggestedFix {
+  id                           Int    @id @default(autoincrement())
+  substandardConditionReportId Int
+  description                  String
+  status                       Int    @default(1)
+
+  substandardConditionReport SubstandardConditionReport @relation(fields: [substandardConditionReportId], references: [id])
+}
+
+model SubstandardConditionReportAppliedFix {
+  id                           Int      @id @default(autoincrement())
+  userId                       Int
+  substandardConditionReportId Int
+  description                  String
+  date                         DateTime @default(now()) @db.Timestamp
+  status                       Int      @default(1)
+
+  user                       User                       @relation(fields: [userId], references: [id])
+  substandardConditionReport SubstandardConditionReport @relation(fields: [substandardConditionReportId], references: [id])
 }
 
 model SubstandardConditionReportLike {
-  id                     Int      @id @default(autoincrement())
-  userId                 Int
-  substandardConditionId Int
-  date                   DateTime @default(now()) @db.Timestamp
+  id                           Int      @id @default(autoincrement())
+  userId                       Int
+  substandardConditionReportId Int
+  date                         DateTime @default(now()) @db.Timestamp
 
   user                       User                       @relation(fields: [userId], references: [id])
-  substandardConditionReport SubstandardConditionReport @relation(fields: [substandardConditionId], references: [id])
+  substandardConditionReport SubstandardConditionReport @relation(fields: [substandardConditionReportId], references: [id])
 }
 
 model SubstandardConditionReportReply {
-  id                     Int      @id @default(autoincrement())
-  userId                 Int
-  substandardConditionId Int
-  comment                String
-  date                   DateTime @default(now()) @db.Timestamp
+  id                           Int      @id @default(autoincrement())
+  userId                       Int
+  substandardConditionReportId Int
+  comment                      String
+  date                         DateTime @default(now()) @db.Timestamp
 
   user                       User                       @relation(fields: [userId], references: [id])
-  substandardConditionReport SubstandardConditionReport @relation(fields: [substandardConditionId], references: [id])
+  substandardConditionReport SubstandardConditionReport @relation(fields: [substandardConditionReportId], references: [id])
 }
