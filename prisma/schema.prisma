@@ -14,4 +14,41 @@ model User {
   email       String? @unique
   password    String  @db.Text
   status      Int     @default(1)
+
+  substandardConditionReports       SubstandardConditionReport[]
+  substandardConditionReportLikes   SubstandardConditionReportLike[]
+  substandardConditionReportReplies SubstandardConditionReportReply[]
+}
+
+model SubstandardConditionReport {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  description String
+  date        DateTime @default(now()) @db.Timestamp
+  status      Int      @default(1)
+
+  user    User                              @relation(fields: [userId], references: [id])
+  likes   SubstandardConditionReportLike[]
+  replies SubstandardConditionReportReply[]
+}
+
+model SubstandardConditionReportLike {
+  id                     Int      @id @default(autoincrement())
+  userId                 Int
+  substandardConditionId Int
+  date                   DateTime @default(now()) @db.Timestamp
+
+  user                       User                       @relation(fields: [userId], references: [id])
+  substandardConditionReport SubstandardConditionReport @relation(fields: [substandardConditionId], references: [id])
+}
+
+model SubstandardConditionReportReply {
+  id                     Int      @id @default(autoincrement())
+  userId                 Int
+  substandardConditionId Int
+  comment                String
+  date                   DateTime @default(now()) @db.Timestamp
+
+  user                       User                       @relation(fields: [userId], references: [id])
+  substandardConditionReport SubstandardConditionReport @relation(fields: [substandardConditionId], references: [id])
 }
