@@ -9,6 +9,7 @@ import { UsersModule } from '../users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ScReportModule } from '../safety/sc-report/sc-report.module';
+import { SubstandardConditionModule } from '../safety/substandard-conditions/substandard-conditions.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ScReportModule } from '../safety/sc-report/sc-report.module';
     AuthModule,
     UsersModule,
     ScReportModule,
+    SubstandardConditionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
