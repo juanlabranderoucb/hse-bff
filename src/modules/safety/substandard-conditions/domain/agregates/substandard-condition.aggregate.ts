@@ -17,7 +17,24 @@ export class SubstandardCondition {
   removeImpact(impact: SubstandardConditionImpactEntity) {
     this.impacts = this.impacts.filter((i) => i.id !== impact.id);
   }
-  
+
+  getId() {
+    return this.id;
+  }
+  getDescription() {
+    return this.description;
+  }
+  getLocation() {
+    return this.location;
+  }
+
+  setDescription(description: string) {
+    this.description = description;
+  }
+  setLocation(location: string) {
+    this.location = location;
+  }
+
   validate() {
     if (this.id == 0)
       throw new NotAcceptableException('Condicion subestandar no encontrado');
