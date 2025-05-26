@@ -1,18 +1,22 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { SubstandardConditionImpactRepositoryInterface } from '../repositories/substandard-condition-impact-repository.interface';
+import { Injectable } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+
 import { CreateSubstandardConditionImpactDto } from '../../application/dtos/create-substandard-condition-impact.dto';
-import { SubstandardConditionImpact } from '../entities/substandard-condition-impact.entity';
+import { SubstandardConditionImpactEntity } from '../entities/substandard-condition-impact.entity';
+import { CreateSubstandardConditionImpactCommand } from '../../application/commands/create-substandard-condition-impact.handler';
+import { UpdateSubstandardConditionImpactCommand } from '../../application/commands/update-substandard-condition-impact.handler';
+import { DeleteSubstandardConditionImpactCommand } from '../../application/commands/delete-substandard-condition-impact.handler';
 
 @Injectable()
 export class SubstandardConditionImpactService {
   constructor(
-    private readonly repository: SubstandardConditionImpactRepositoryInterface,
+    private readonly commandBus: CommandBus
   ) {}
 
   async create(
     data: CreateSubstandardConditionImpactDto,
-  ): Promise<Partial<SubstandardConditionImpact>> {
-    return await this.repository.create(data);
+  ): Promise<Partial<SubstandardConditionImpactEntity>> {
+    return this.commandBus.execute(new CreateSubstandardConditionImpactCommand(data));
   }
 
   async update(
@@ -21,21 +25,11 @@ export class SubstandardConditionImpactService {
       CreateSubstandardConditionImpactDto,
       'substandardConditionReportId'
     >,
-  ): Promise<Partial<SubstandardConditionImpact>> {
-    this.validate(await this.repository.findOne(id));
-
-    return await this.repository.update(id, data);
+  ): Promise<Partial<SubstandardConditionImpactEntity>> {
+    return this.commandBus.execute(new UpdateSubstandardConditionImpactCommand(id, data));
   }
 
-  async delete(id: number): Promise<Partial<SubstandardConditionImpact>> {
-    this.validate(await this.repository.findOne(id));
-
-    return await this.repository.delete(id);
-  }
-
-  private validate(impact) {
-    if (!impact)
-      throw new NotFoundException('Consecuencia del reporte no encontrado');
-    return impact;
+  async delete(id: number): Promise<Partial<SubstandardConditionImpactEntity>> {
+    return this.commandBus.execute(new DeleteSubstandardConditionImpactCommand(id));
   }
 }

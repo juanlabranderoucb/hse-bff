@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/modules/database/database.service';
 import { SubstandardConditionImpactRepositoryInterface } from '../../../domain/repositories/substandard-condition-impact-repository.interface';
 import { CreateSubstandardConditionImpactDto } from '../../../application/dtos/create-substandard-condition-impact.dto';
-import { SubstandardConditionImpact } from '../../../domain/entities/substandard-condition-impact.entity';
+import { SubstandardConditionImpactEntity } from '../../../domain/entities/substandard-condition-impact.entity';
 
 @Injectable()
 export class SubstandardConditionImpactRepository
@@ -12,7 +12,7 @@ export class SubstandardConditionImpactRepository
 
   async findOne(
     id: number,
-  ): Promise<Partial<SubstandardConditionImpact | null>> {
+  ): Promise<Partial<SubstandardConditionImpactEntity | null>> {
     return await this.db.substandardConditionReportImpact.findUnique({
       where: { id, status: 1 },
       select: {
@@ -24,7 +24,7 @@ export class SubstandardConditionImpactRepository
 
   async create(
     data: CreateSubstandardConditionImpactDto,
-  ): Promise<Partial<SubstandardConditionImpact>> {
+  ): Promise<Partial<SubstandardConditionImpactEntity>> {
     return await this.db.substandardConditionReportImpact.create({
       data: {
         substandardConditionReportId: Number(data.substandardConditionReportId),
@@ -42,7 +42,7 @@ export class SubstandardConditionImpactRepository
       CreateSubstandardConditionImpactDto,
       'substandardConditionReportId'
     >,
-  ): Promise<Partial<SubstandardConditionImpact>> {
+  ): Promise<Partial<SubstandardConditionImpactEntity>> {
     return await this.db.substandardConditionReportImpact.update({
       where: { id, status: 1 },
       data: {
@@ -52,7 +52,7 @@ export class SubstandardConditionImpactRepository
     });
   }
 
-  async delete(id: number): Promise<Partial<SubstandardConditionImpact>> {
+  async delete(id: number): Promise<Partial<SubstandardConditionImpactEntity>> {
     return await this.db.substandardConditionReportImpact.update({
       where: { id: id, status: 1 },
       data: {
