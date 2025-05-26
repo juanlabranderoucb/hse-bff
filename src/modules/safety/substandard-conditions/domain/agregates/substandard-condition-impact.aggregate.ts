@@ -15,6 +15,14 @@ export class SubstandardConditionImpact {
     }
   }
 
+  setDescription(description: string) {
+    this._description = description;
+  }
+
+  getDescription() {
+    return this._description;
+  }
+
   validate() {
     if (this._id == 0)
       throw new NotAcceptableException('Consecuencia del reporte no encontrado');
