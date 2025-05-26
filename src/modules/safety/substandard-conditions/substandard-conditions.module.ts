@@ -13,6 +13,7 @@ import { SubstandardConditionImpactRepository } from './infraestructure/persiste
 import { CreateSubstandardConditionImpactHandler } from './application/commands/create-substandard-condition-impact.handler';
 import { UpdateSubstandardConditionImpactHandler } from './application/commands/update-substandard-condition-impact.handler';
 import { DeleteSubstandardConditionImpactHandler } from './application/commands/delete-substandard-condition-impact.handler';
+import { EventHandlers } from './application/events/handlers';
 
 @Module({
   imports: [CqrsModule],
@@ -23,6 +24,7 @@ import { DeleteSubstandardConditionImpactHandler } from './application/commands/
     CreateSubstandardConditionImpactHandler,
     UpdateSubstandardConditionImpactHandler,
     DeleteSubstandardConditionImpactHandler,
+    ...EventHandlers,
     {
       provide: SubstandardConditionRepositoryInterface,
       useClass: SubstandardConditionRepository,
