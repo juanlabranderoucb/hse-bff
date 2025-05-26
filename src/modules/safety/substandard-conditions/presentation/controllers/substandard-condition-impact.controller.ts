@@ -3,7 +3,7 @@ import { BearerAuth } from 'src/modules/auth/decorator/bearer-auth.decorator';
 import { SubstandardConditionImpactService } from '../../domain/services/substandard-condition-impact.service';
 import { CreateSubstandardConditionImpactDto } from '../../application/dtos/create-substandard-condition-impact.dto';
 
-@Controller('substandard-condition/impacts')
+@Controller('substandard-conditions/impacts')
 @BearerAuth()
 export class SubstandardConditionImpactController {
   constructor(private readonly service: SubstandardConditionImpactService) {}
